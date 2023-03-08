@@ -1,0 +1,44 @@
+.drag-zone {
+  /* margin-left: 56px; */
+  width: 243px;
+  height: 448px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--standart-radius);
+  border: 2px dashed #C4C4C4;
+  box-sizing: border-box;
+}
+
+.drag-zone__cont {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.drag-zone__img {
+  width: 20px;
+}
+
+.drag-zone__text {
+  font-size: 14px;
+  line-height: 17px;
+  font-weight: 500;
+  margin: 12px 0 0;
+  text-align: center;
+  color: var(--iris-color);
+}
+
+.drag-zone__text > span {
+  font-size: 12px;
+  line-height: 15px;
+  font-weight: 400;
+  margin-top: 4px;
+  color: #6B7280;
+  display: block;
+}
+
+.drag-zone_dragging {
+  background: #F0F9FF;
+}

@@ -3,3 +3,5 @@
 @import url(./components/App/App.css);
 @import url(./components/Button/Button.css);
 @import url(./components/Calculator/Calculator.css);
+@import url(./components/DragZone/DragZone.css);
+@import url(./components/Constructor/Constructor.css);
