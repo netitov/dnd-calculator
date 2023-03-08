@@ -1,3 +1,5 @@
 @import url(./vendor/normalize.css);
 @import url(./vendor/inter.css);
 @import url(./components/App/App.css);
+@import url(./components/Button/Button.css);
+@import url(./components/Calculator/Calculator.css);
