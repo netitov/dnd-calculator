@@ -14,6 +14,7 @@
   padding: 4px;
   border-radius: 4px;
   box-sizing: border-box;
+  position: relative;
 }
 
 .calculator__disp-cont {
@@ -51,5 +52,28 @@
 .calculator__equal-cont {
   height: 72px;
   justify-content: inherit;
+}
+
+.calculator_inactive {
+  display: none;
+}
+
+.calculator__line {
+  width: 244px;
+  position: absolute;
+  left: -2px;
+  display: none;
+}
+
+.calculator__line_top {
+  top: -4px;
+}
+
+.calculator__line_bottom {
+  bottom: -4px;
+}
+
+.calculator__line_active {
+  display: block;
 }
 

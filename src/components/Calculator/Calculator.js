@@ -1,46 +1,23 @@
-import Button from '../Button/Button';
-import { numberArr, symbolsArr } from '../../utils/constants';
+import CalcBlock from '../CalcBlock/CalcBlock';
 
 function Calculator(props) {
 
+  const activityClass = props.calcActivity || props.calcActivity === undefined  ? '' : ' calculator_inactive';
 
   return (
-    <div className="calculator">
-
-      <div className="calculator__container calculator__disp-cont">
-        <div className="calculator__disp-wrapper">
-          <h1 className="calculator__display">0</h1>
-        </div>
-      </div>
-
-      <div className="calculator__container calculator__symb-cont">
-        {symbolsArr.map((i) => {
-          return (
-            <Button
-              value={i}
-              key={i}
-            />
-          )
-        })}
-      </div>
-
-      <div className="calculator__container calculator__num-cont">
-        {numberArr.map((i) => {
-          return (
-            <Button
-              value={i}
-              key={i}
-            />
-          )
-        })}
-      </div>
-
-      <div className="calculator__container calculator__equal-cont">
-        <Button
-          value="="
-        />
-      </div>
-
+    <div className={`calculator${activityClass}`}>
+      {props.calcData.map((i, index) => {
+        return (
+          <CalcBlock
+            contClass={i.contClass}
+            btnArr={i.btnArr}
+            id={i.id}
+            key={i.id}
+            index={index}
+            moveCard={props.moveCard}
+          />
+        )
+      })}
     </div>
   );
 }

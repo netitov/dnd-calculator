@@ -1,13 +1,14 @@
-import Calculator from '../Calculator/Calculator';
-import DragZone from '../DragZone/DragZone';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import Constructor from '../Constructor/Constructor';
 
-//https://react-dnd.github.io/react-dnd/examples/dustbin/copy-or-move
 
 function App() {
   return (
     <div className="page">
-      <Constructor />
+      <DndProvider backend={HTML5Backend}>
+        <Constructor />
+			</DndProvider>
     </div>
   );
 }

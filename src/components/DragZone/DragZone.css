@@ -42,3 +42,11 @@
 .drag-zone_dragging {
   background: #F0F9FF;
 }
+
+.drag-zone_inactive {
+  border: none;
+}
+
+.drag-zone_inactive > .drag-zone__cont {
+  display: none;
+}

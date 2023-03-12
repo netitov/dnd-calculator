@@ -5,7 +5,16 @@ function Button(props) {
   ;
 
   return (
-    <button className={btnClass} type="button" onClick={props.onBtnClick}>{props.value}</button>
+    <button
+      style={{
+        cursor: 'move',
+      }}
+      className={btnClass}
+      type="button"
+      onClick={props.onBtnClick}
+    >
+      {props.value}
+    </button>
   );
 }
 
