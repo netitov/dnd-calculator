@@ -1,7 +1,7 @@
 import Button from '../Button/Button';
 import { ItemTypes } from '../../utils/constants';
 import { useDrag, useDrop } from 'react-dnd';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
 import line from '../../images/line.svg';
 
 function CalcBlock(props) {
@@ -10,21 +10,30 @@ function CalcBlock(props) {
 
   const [upLineActive, setUpLineActive] = useState(false);
   const [bottomLineActive, setbottomLineActive] = useState(false);
-
+  const staticItemId = 1;
 
   const [{isDragging}, drag] = useDrag({
-    type: props.id === 1 ? ItemTypes.CALCDISPLAY : ItemTypes.CALCBLOCK,
+    type: props.id === staticItemId && props.candrop ? ItemTypes.CALCDISPLAY : ItemTypes.CALCBLOCK,
     item: {
       id: props.id,
-      index: props.index
+      index: props.index,
+      candrop: props.candrop
+    },
+    canDrag () {
+      if (props.dropped && !props.candrop) {
+        return false
+      } else {
+        return true
+      }
     },
     collect: monitor => ({
       isDragging: !!monitor.isDragging(),
+      canDrag: !!monitor.canDrag(),
     })
   })
 
   const [{ isOver }, drop] = useDrop({
-    accept: ItemTypes.CALCBLOCK,
+    accept: props.id === staticItemId && props.candrop ? ItemTypes.CALCDISPLAY : ItemTypes.CALCBLOCK,
     hover(item, monitor) {
 
       if (!ref.current) {
@@ -32,14 +41,15 @@ function CalcBlock(props) {
       }
       const dragIndex = item.index;
       const hoverIndex = props.index;
+      console.log(dragIndex, hoverIndex, props.id)
 
       // Don't replace items with themselves
-      if (dragIndex === hoverIndex) {
+      if (dragIndex === hoverIndex && item.id !== staticItemId) {
         return;
       };
 
       //unable drop for display
-      if (props.id === 1) {
+      if (props.id === staticItemId && props.candrop) {
         return;
       };
 
@@ -57,20 +67,22 @@ function CalcBlock(props) {
       // When dragging downwards, only move when the cursor is below 50%
       // When dragging upwards, only move when the cursor is above 50%
       // Dragging downwards
-      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+      //console.log(dragIndex-hoverIndex, hoverClientY-hoverMiddleY, item.candrop)
+      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY && item.candrop) {
         return;
       };
       // Dragging upwards
-      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY && item.candrop) {
         return;
       };
 
-      if (dragIndex < hoverIndex && hoverClientY > hoverMiddleY) {
+      if (hoverClientY > hoverMiddleY && item.id !== staticItemId) {
         setUpLineActive(false);
         setbottomLineActive(true);
       };
 
-      if (dragIndex > hoverIndex && hoverClientY < hoverMiddleY) {
+      if ((hoverClientY < hoverMiddleY && item.id !== staticItemId) ||
+        (hoverClientY < hoverMiddleY && item.id === staticItemId && hoverIndex === 0)) {
         setbottomLineActive(false);
         setUpLineActive(true);
       };
@@ -84,7 +96,7 @@ function CalcBlock(props) {
     }),
     drop(item) {
       if (upLineActive || bottomLineActive) {
-        props.moveCard(item.index, props.index);
+        props.moveCard(item.index, props.index, item, bottomLineActive);
       }
       setUpLineActive(false);
       setbottomLineActive(false);
@@ -93,22 +105,23 @@ function CalcBlock(props) {
 
   const upLineClass = upLineActive && isOver ? ' calculator__line_active' : '';
   const bottomLineClass = bottomLineActive && isOver ? ' calculator__line_active' : '';
+  const droppedClass = props.dropped && !props.candrop ? ' calculator__container_inactive' : '';
+  const draggingClass = isDragging ? ' calculator__container_dragging' : '';
 
-  drag(drop(ref));
+  const dndref = props.candrop ? drag(drop(ref)) : drag;
 
   return (
 
-    <div className={`calculator__container ${props.contClass}`}
-      ref={ref}
+    <div className={`calculator__container ${props.contClass}${droppedClass}${draggingClass}`}
+      ref={dndref}
       style={{
-        opacity: isDragging ? 0.5 : 1,
-        cursor: props.id === 1 ? 'not-allowed' : 'move'
+        cursor: (props.id === 1 && props.candrop) || (!props.candrop && props.dropped) ? 'not-allowed' : 'move',
       }}
     >
       <img src={line} alt="line" className={`calculator__line calculator__line_top${upLineClass}`}></img>
       <img src={line} alt="line" className={`calculator__line calculator__line_bottom${bottomLineClass}`}></img>
 
-      {props.id === 1 ? // if id = 1, then render display (without buttons), else render buttons
+      {props.id === staticItemId ? // if id = 1, then render display (without buttons), else render buttons
         (
           <div className="calculator__disp-wrapper">
             <h1 className="calculator__display">0</h1>

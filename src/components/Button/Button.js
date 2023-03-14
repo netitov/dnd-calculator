@@ -6,9 +6,6 @@ function Button(props) {
 
   return (
     <button
-      style={{
-        cursor: 'move',
-      }}
       className={btnClass}
       type="button"
       onClick={props.onBtnClick}

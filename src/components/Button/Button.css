@@ -8,7 +8,9 @@
   font-size: 14px;
   line-height: 15px;
   padding: 0;
+  cursor: inherit;
 }
+
 
 .btn_wide {
   grid-column: 1/3;

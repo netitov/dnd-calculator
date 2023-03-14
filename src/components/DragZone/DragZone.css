@@ -4,7 +4,7 @@
   height: 448px;
   display: flex;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
   border-radius: var(--standart-radius);
   border: 2px dashed #C4C4C4;
   box-sizing: border-box;

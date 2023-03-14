@@ -3,9 +3,10 @@ import CalcBlock from '../CalcBlock/CalcBlock';
 function Calculator(props) {
 
   const activityClass = props.calcActivity || props.calcActivity === undefined  ? '' : ' calculator_inactive';
+  const droppedClass = props.candrop ? ' calculator_dropped' : '';
 
   return (
-    <div className={`calculator${activityClass}`}>
+    <div className={`calculator${activityClass}${droppedClass}`}>
       {props.calcData.map((i, index) => {
         return (
           <CalcBlock
@@ -15,6 +16,9 @@ function Calculator(props) {
             key={i.id}
             index={index}
             moveCard={props.moveCard}
+            candrop={props.candrop}
+            dropped={i.dropped}
+
           />
         )
       })}

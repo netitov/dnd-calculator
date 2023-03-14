@@ -10,22 +10,26 @@ export const calcData = [
   {
     contClass: 'calculator__disp-cont',
     btnArr: [],
-    id: 1
+    id: 1,
+    dropped: false
   },
   {
     contClass: 'calculator__symb-cont',
     btnArr: symbolsArr,
-    id: 2
+    id: 2,
+    dropped: false
   },
   {
     contClass: 'calculator__num-cont',
     btnArr: numberArr,
-    id: 3
+    id: 3,
+    dropped: false
   },
   {
     contClass: 'calculator__equal-cont',
     btnArr: equalArr,
-    id: 4
+    id: 4,
+    dropped: false
   },
 ];
 
