@@ -1,5 +1,6 @@
 import Calculator from '../Calculator/Calculator';
 import DragZone from '../DragZone/DragZone';
+import Switcher from '../Switcher/Switcher';
 import { useState } from 'react';
 import { useDrop } from 'react-dnd';
 import { ItemTypes, calcData } from '../../utils/constants';
@@ -63,6 +64,7 @@ function Constructor() {
 
   return (
     <div className="constructor">
+      <Switcher />
       <Calculator
         calcData={calcData}
         candrop={false}

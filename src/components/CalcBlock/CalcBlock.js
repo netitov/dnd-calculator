@@ -66,7 +66,6 @@ function CalcBlock(props) {
       // When dragging downwards, only move when the cursor is below 50%
       // When dragging upwards, only move when the cursor is above 50%
       // Dragging downwards
-      //console.log(dragIndex-hoverIndex, hoverClientY-hoverMiddleY, item.candrop)
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY && item.candrop) {
         return;
       };

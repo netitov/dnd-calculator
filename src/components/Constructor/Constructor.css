@@ -4,4 +4,11 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 56px;
+  position: relative;
+}
+
+@media (max-width: 580px) {
+  .constructor {
+    margin-top: 60px;
+  }
 }
