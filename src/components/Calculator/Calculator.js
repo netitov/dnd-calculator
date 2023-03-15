@@ -18,7 +18,7 @@ function Calculator(props) {
             moveCard={props.moveCard}
             candrop={props.candrop}
             dropped={i.dropped}
-
+            removeItem={props.removeItem}
           />
         )
       })}

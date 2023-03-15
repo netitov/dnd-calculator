@@ -41,7 +41,6 @@ function CalcBlock(props) {
       }
       const dragIndex = item.index;
       const hoverIndex = props.index;
-      console.log(dragIndex, hoverIndex, props.id)
 
       // Don't replace items with themselves
       if (dragIndex === hoverIndex && item.id !== staticItemId) {
@@ -103,6 +102,12 @@ function CalcBlock(props) {
     }
   })
 
+  function handleRemove() {
+    if (props.candrop) {
+      props.removeItem(props.id);
+    }
+  }
+
   const upLineClass = upLineActive && isOver ? ' calculator__line_active' : '';
   const bottomLineClass = bottomLineActive && isOver ? ' calculator__line_active' : '';
   const droppedClass = props.dropped && !props.candrop ? ' calculator__container_inactive' : '';
@@ -117,6 +122,7 @@ function CalcBlock(props) {
       style={{
         cursor: (props.id === 1 && props.candrop) || (!props.candrop && props.dropped) ? 'not-allowed' : 'move',
       }}
+      onDoubleClick={handleRemove}
     >
       <img src={line} alt="line" className={`calculator__line calculator__line_top${upLineClass}`}></img>
       <img src={line} alt="line" className={`calculator__line calculator__line_bottom${bottomLineClass}`}></img>

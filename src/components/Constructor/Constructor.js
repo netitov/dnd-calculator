@@ -12,7 +12,6 @@ function Constructor() {
     () => ({
       accept: ItemTypes.CALCBLOCK,
       drop: (item) => {
-        //console.log(newCalc)
         if (newCalc.filter((i) => i.id === item.id).length === 0) {
           const element = calcData.filter((i) => i.id === item.id);
           //disable initial element after dropping
@@ -33,7 +32,7 @@ function Constructor() {
       }),
     }),[newCalc]
   )
-  const isActive = canDrop && isOver
+  const isActive = canDrop && isOver;
 
   function moveCard(dragIndex, hoverIndex, item, bottomLineActive) {
 
@@ -50,15 +49,16 @@ function Constructor() {
 
     newCalc.splice(removedIndex, 1);
     newCalc.splice(addedIndex, 0, element);
-    setNewCalc(newCalc);
   }
 
   const calcActivity = newCalc.length === 0 ? false : true;
   const isOverClass = isOver && !calcActivity  ? ' drag-zone_dragging' : '';
   const isActiveClass = calcActivity ? ' drag-zone_inactive' : '';
 
-  function teste() {
-    console.log(newCalc)
+  function removeItem(itemId) {
+    const currIndex = calcData.findIndex((i) => i.id === itemId);
+    calcData[currIndex].dropped = false;
+    setNewCalc(newCalc.filter((i) => i.id !== itemId));
   }
 
   return (
@@ -74,7 +74,7 @@ function Constructor() {
         newCalc={newCalc}
         calcActivity={calcActivity}
         moveCard={moveCard}
-        teste={teste}
+        removeItem={removeItem}
       />
     </div>
   );
