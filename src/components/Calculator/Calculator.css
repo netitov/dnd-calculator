@@ -3,8 +3,8 @@
   flex-direction: column;
   gap: 12px;
   width: 240px;
+  transition: all 0.3s;
 }
-
 
 .calculator__container {
   display: grid;
@@ -94,5 +94,16 @@
 
 .calculator_dropped > div {
   box-shadow: none;
+}
+
+.calculator_invisible {
+  transform: translateX(-200%);
+  visibility: hidden;
+}
+
+@media (max-width: 580px) {
+  .calculator_invisible {
+    display: none;
+  }
 }
 

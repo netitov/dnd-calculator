@@ -8,6 +8,13 @@ import { ItemTypes, calcData } from '../../utils/constants';
 
 function Constructor() {
   const [newCalc, setNewCalc] = useState([]);
+  const [activeMode, setActiveMode] = useState('Constructor');
+  const [runtime, setRuntime] = useState(false);
+
+  function switchMode(data) {
+    setActiveMode(data);
+    setRuntime(data === 'Runtime');
+  }
 
   const [{ canDrop, isOver }, drop] = useDrop(
     () => ({
@@ -64,10 +71,15 @@ function Constructor() {
 
   return (
     <div className="constructor">
-      <Switcher />
+      <Switcher
+        switchMode={switchMode}
+        activeMode={activeMode}
+      />
       <Calculator
         calcData={calcData}
         candrop={false}
+        activeMode={activeMode}
+
       />
       <DragZone
         isOverClass={isOverClass}
@@ -77,6 +89,7 @@ function Constructor() {
         calcActivity={calcActivity}
         moveCard={moveCard}
         removeItem={removeItem}
+        runtime={runtime}
       />
     </div>
   );

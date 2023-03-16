@@ -2,11 +2,14 @@ import CalcBlock from '../CalcBlock/CalcBlock';
 
 function Calculator(props) {
 
-  const activityClass = props.calcActivity || props.calcActivity === undefined  ? '' : ' calculator_inactive';
+  const activityClass = props.calcActivity || props.calcActivity === undefined
+  || props.activeMode === 'Constructor'  ? '' : ' calculator_inactive';
   const droppedClass = props.candrop ? ' calculator_dropped' : '';
+  const visibleClass = props.activeMode === 'Runtime' ? ' calculator_invisible' : '';
 
   return (
-    <div className={`calculator${activityClass}${droppedClass}`}>
+    <div className={`calculator${activityClass}${droppedClass}${visibleClass}`}
+    >
       {props.calcData.map((i, index) => {
         return (
           <CalcBlock
@@ -19,6 +22,7 @@ function Calculator(props) {
             candrop={props.candrop}
             dropped={i.dropped}
             removeItem={props.removeItem}
+            runtime={props.runtime}
           />
         )
       })}

@@ -20,6 +20,7 @@ function DragZone(props) {
         moveCard={props.moveCard}
         candrop={true}
         removeItem={props.removeItem}
+        runtime={props.runtime}
       />
 
 

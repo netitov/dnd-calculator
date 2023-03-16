@@ -20,7 +20,7 @@ function CalcBlock(props) {
       candrop: props.candrop
     },
     canDrag () {
-      if (props.dropped && !props.candrop) {
+      if (props.dropped && !props.candrop || props.runtime) {
         return false
       } else {
         return true
@@ -119,7 +119,8 @@ function CalcBlock(props) {
     <div className={`calculator__container ${props.contClass}${droppedClass}${draggingClass}`}
       ref={dndref}
       style={{
-        cursor: (props.id === 1 && props.candrop) || (!props.candrop && props.dropped) ? 'not-allowed' : 'move',
+        cursor: (props.id === 1 && props.candrop) || (!props.candrop && props.dropped) ? 'not-allowed' :
+        props.runtime ? 'pointer' : 'move'
       }}
       onDoubleClick={handleRemove}
     >
