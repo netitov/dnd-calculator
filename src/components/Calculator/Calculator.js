@@ -23,6 +23,8 @@ function Calculator(props) {
             dropped={i.dropped}
             removeItem={props.removeItem}
             runtime={props.runtime}
+            clickBtn={props.clickBtn}
+            result={props.result}
           />
         )
       })}

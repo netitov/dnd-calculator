@@ -1,9 +1,5 @@
-import { useState } from 'react';
-import { useDrop } from 'react-dnd';
 import dragpic from '../../images/dragpic.svg';
-import { ItemTypes, calcData } from '../../utils/constants';
 import Calculator from '../Calculator/Calculator';
-
 
 function DragZone(props) {
 
@@ -21,6 +17,8 @@ function DragZone(props) {
         candrop={true}
         removeItem={props.removeItem}
         runtime={props.runtime}
+        clickBtn={props.clickBtn}
+        result={props.result}
       />
 
 

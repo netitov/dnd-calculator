@@ -5,6 +5,7 @@ export const ItemTypes = {
   CALCBLOCK: 'calcblock',
   CALCDISPLAY: 'calcdisplay',
 }
+export const maxNumber = 9;
 
 export const calcData = [
   {

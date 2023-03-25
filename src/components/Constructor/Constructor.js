@@ -3,7 +3,7 @@ import DragZone from '../DragZone/DragZone';
 import Switcher from '../Switcher/Switcher';
 import { useState } from 'react';
 import { useDrop } from 'react-dnd';
-import { ItemTypes, calcData } from '../../utils/constants';
+import { ItemTypes, calcData, numberArr, symbolsArr, equalArr, maxNumber } from '../../utils/constants';
 
 
 function Constructor() {
@@ -11,12 +11,91 @@ function Constructor() {
   const [activeMode, setActiveMode] = useState('Constructor');
   const [runtime, setRuntime] = useState(false);
 
+  const [result, setResult] = useState(0);//count result
+  const [num, setNum] = useState(0);//current number
+  const [prevNum, setPrevNum] = useState(0);//previous number
+  const [operator, setOperator] = useState();
+
+  //calculate
+  function defineBtnType(data) {
+    if (numberArr.includes(data)) {
+      if (data === ',') {
+        inputNum('.');
+      } else {
+        inputNum(data);
+      }
+    }
+    if (symbolsArr.includes(data)) {
+      operatorHandler(data);
+    }
+    if (equalArr.includes(data) || data === 'Enter') {
+      calculate();
+    }
+  }
+
+  function inputNum(data) {
+    if (num.length >= maxNumber) return;
+    if (num !== 0) {
+      setNum(String(num) + data);
+      setResult(String(num) + data);
+    } else if (data === '.') {
+      setNum('0.');
+      setResult('0.');
+    } else {
+      setNum(data);
+      setResult(data);
+    }
+    if (operator === undefined) {
+      setPrevNum(0);
+    }
+  }
+
+  function operatorHandler(data) {
+    setOperator(data);
+    if (prevNum !== 0) {
+      calculate(data);
+    } else {
+      setPrevNum(num);
+      setNum(0);
+    }
+  }
+
+  function limitValue(count) {
+    const numberDecimal = (String(count).length - (maxNumber + 1) - String(count).indexOf('.'));
+    if (String(count).indexOf('.') > maxNumber) {
+      return 'Не определено';
+    }
+    if (!String(count).includes('.') && String(count).length > maxNumber) {
+      return 'Не определено';
+    }
+    return String(count).length > maxNumber ? count.toFixed(numberDecimal) : count;
+  }
+
+  function calculate(data) {
+    if (operator === '/') {
+      const count = parseFloat(prevNum) / parseFloat(num);
+      setResult(limitValue(count));
+    } else if (operator === 'x') {
+      const count = parseFloat(prevNum) * parseFloat(num);
+      setResult(limitValue(count));
+    } else if (operator === '-') {
+      const count = parseFloat(prevNum) - parseFloat(num);
+      setResult(limitValue(count));
+    } else if (operator === '+') {
+      const count = parseFloat(prevNum) + parseFloat(num);
+      setResult(limitValue(count));
+    }
+    setNum(0);
+    setOperator(data);
+    setPrevNum(result);
+  }
+
   function switchMode(data) {
     setActiveMode(data);
     setRuntime(data === 'Runtime');
   }
 
-  const [{ canDrop, isOver }, drop] = useDrop(
+  const [{ isOver }, drop] = useDrop(
     () => ({
       accept: ItemTypes.CALCBLOCK,
       drop: (item) => {
@@ -40,7 +119,6 @@ function Constructor() {
       }),
     }),[newCalc]
   )
-  const isActive = canDrop && isOver;
 
   function moveCard(dragIndex, hoverIndex, item, bottomLineActive) {
 
@@ -90,6 +168,8 @@ function Constructor() {
         moveCard={moveCard}
         removeItem={removeItem}
         runtime={runtime}
+        clickBtn={defineBtnType}
+        result={result}
       />
     </div>
   );

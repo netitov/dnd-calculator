@@ -3,7 +3,7 @@
   flex-direction: column;
   gap: 12px;
   width: 240px;
-  transition: all 0.3s;
+  transition: all 0.4s;
 }
 
 .calculator__container {
@@ -40,7 +40,10 @@
   color: #111827;
   margin: 0;
   text-align: end;
-  padding-right: 8px;
+  padding: 0 8px;
+  white-space: nowrap;
+  max-width: 232px;
+  box-sizing: border-box;
 }
 
 .calculator__num-cont {
@@ -97,7 +100,7 @@
 }
 
 .calculator_invisible {
-  transform: translateX(-200%);
+  transform: translateX(-100vw);
   visibility: hidden;
 }
 

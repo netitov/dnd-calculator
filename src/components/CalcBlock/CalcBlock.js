@@ -1,9 +1,10 @@
 import Button from '../Button/Button';
 import { ItemTypes } from '../../utils/constants';
 import { useDrag, useDrop } from 'react-dnd';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import line from '../../images/line.svg';
 
+let initFont = 36;
 function CalcBlock(props) {
 
   const ref = useRef(null);
@@ -102,7 +103,7 @@ function CalcBlock(props) {
   })
 
   function handleRemove() {
-    if (props.candrop) {
+    if (props.candrop && !props.runtime) {
       props.removeItem(props.id);
     }
   }
@@ -114,13 +115,34 @@ function CalcBlock(props) {
 
   const dndref = props.candrop ? drag(drop(ref)) : drag;
 
+  //decrease font size
+  useEffect(() => {
+    if (props.id === 1 && props.dropped) {
+      const display = dndref.current;
+      const displayContent = display.lastChild.lastChild;
+      if (props.result === 'Не определено') {
+        displayContent.style.fontSize = '26px';
+      }
+      else if (String(props.result).length > 8) {
+        displayContent.style.fontSize = '33.5px';
+      } else {
+        displayContent.style.fontSize = '36px';
+      }
+    }
+  }, [props.result])
+
+  function numberWithSpaces() {
+    const newStr = props.result === undefined ? 0 : props.result.toString().replace('.', ',');
+    return String(newStr).includes(',') ? newStr : String(newStr).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  }
+
   return (
 
     <div className={`calculator__container ${props.contClass}${droppedClass}${draggingClass}`}
       ref={dndref}
       style={{
         cursor: (props.id === 1 && props.candrop) || (!props.candrop && props.dropped) ? 'not-allowed' :
-        props.runtime ? 'pointer' : 'move'
+        props.runtime ? 'initial' : 'move'
       }}
       onDoubleClick={handleRemove}
     >
@@ -130,7 +152,7 @@ function CalcBlock(props) {
       {props.id === staticItemId ? // if id = 1, then render display (without buttons), else render buttons
         (
           <div className="calculator__disp-wrapper">
-            <h1 className="calculator__display">0</h1>
+            <h1 className="calculator__display">{numberWithSpaces()}</h1>
           </div>
         ) :
         (
@@ -139,6 +161,8 @@ function CalcBlock(props) {
               <Button
                 value={i}
                 key={i}
+                runtime={props.runtime}
+                clickBtn={props.clickBtn}
               />
             )
           })
